@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STYLE | Магазин одежды</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f4f4f4; color: #333; }
+        header { background: #111; color: #fff; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 10; }
+        header h1 { font-size: 24px; letter-spacing: 2px; font-weight: 300; }
+        header span { font-weight: bold; }
+        .catalog { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; max-width: 800px; margin: 0 auto; }
+        .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 12px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+        .card p { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .btn { background: #111; color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+        .cart-btn { position: fixed; bottom: 20px; right: 20px; background: #111; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 20; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #e74c3c; color: white; font-size: 12px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    </style>
+</head>
+<body>
+    <header><h1>STYLE<span>.store</span></h1></header>
+    <div class="catalog" id="catalog"></div>
+    <div class="cart-btn" onclick="alert('В корзине: ' + cart.length + ' товаров')">🛒<div class="cart-count" id="cart-count">0</div></div>
+    <script>
+        const products = [
+            { id: 1, name: "Футболка Oversize", price: 1990, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&q=80" },
+            { id: 2, name: "Джинсовая куртка", price: 4500, img: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=400&q=80" },
+            { id: 3, name: "Худи с капюшоном", price: 3200, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&q=80" }
+        ];
+        let cart = [];
+        const catalog = document.getElementById('catalog');
+        products.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<img src="${p.img}"><div class="card-content"><h3>${p.name}</h3><p>${p.price} ₽</p><button class="btn" onclick="addToCart(${p.id})">В корзину</button></div>`;
+            catalog.appendChild(card);
+        });
+        function addToCart(id) {
+            cart.push(products.find(p => p.id === id));
+            document.getElementById('cart-count').innerText = cart.length;
+            event.target.innerText = "Добавлено!";
+        }
+    </script>
+</body>
+</html>
